@@ -37,8 +37,24 @@ namespace ContactPro.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Contacts.Include(c => c.AppUser);
-            return View(await applicationDbContext.ToListAsync());
+            var contacts = new List<Contact>();
+            string appUserId = _userManager.GetUserId(User);
+
+            // Return the userID and its associated contacts and categories:
+            AppUser? appUser = _context.Users
+                                      .Include(c => c.Contacts)
+                                      .ThenInclude(c => c.Categories)
+                                      .FirstOrDefault(u => u.Id == appUserId);
+
+            var categories = appUser.Categories;
+
+            contacts = appUser.Contacts.OrderBy(c => c.LastName)
+                                       .ThenBy(c => c.FirstName)
+                                       .ToList();
+
+            ViewData["CategoryId"] = new SelectList(categories, "Id", "Name");
+
+            return View(contacts);
         }
 
         // GET: Contacts/Details/5
@@ -77,7 +93,7 @@ namespace ContactPro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate,Address1,Address2,City,State,ZipCode,Email,PhoneNumber,ImageFile")] Contact contact)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,BirthDate,Address1,Address2,City,State,ZipCode,Email,PhoneNumber,ImageFile")] Contact contact, List<int> CategoryList)
         {
             ModelState.Remove("AppUserId");
 
@@ -99,6 +115,14 @@ namespace ContactPro.Controllers
 
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
+
+                // Loop over all the selected categories
+                foreach (int categoryId in CategoryList)
+                {
+                    await _addressBookService.AddContactToCategoryAsync(categoryId, contact.Id);
+                }
+                // Save each category selected to the contactcategories table
+
                 return RedirectToAction(nameof(Index));
             }
 
