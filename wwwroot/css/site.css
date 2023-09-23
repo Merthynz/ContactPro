@@ -93,7 +93,8 @@ main {
 }
 
 .texthighlight {
-    color: var(--cf-primaryColor);
+    /*color: var(--cf-primaryColor);*/
+    color: #ffbf00;
 }
 
 .heroTitle {
@@ -158,7 +159,8 @@ main {
 
 .footer {
     flex-shrink: 0;
-    background-color: var(--cf-secondaryColor);
+    /*background-color: var(--cf-secondaryColor);*/
+    background-color: #a4def4;
 }
 
 .copyright {
