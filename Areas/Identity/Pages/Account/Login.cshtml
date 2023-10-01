@@ -8,8 +8,13 @@
 <div class="row d-flex justify-content-center">
     <div class="col-md-6">
         <section>
+            <form id="account" method="post" class="mb-5">
+                <h2>Use Demo:</h2>
+                <button id="login-submit" type="submit" class="btn btn-lg btn-primary" value="demoLogin" name="demoLogin" onclick="this.form.submit()">Try Me!</button>
+            </form>
+
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
+                <h2>Log in.</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating mt-2">
