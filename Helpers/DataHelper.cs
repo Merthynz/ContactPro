@@ -17,6 +17,12 @@ namespace ContactPro.Helpers
             await dbContextSvc.Database.MigrateAsync();
         }
 
+        public static async Task SeedDemoUserAsync(IServiceProvider svcProvider)
+        {
+            // Get our dependencies from the service provider
+            UserManager<AppUser>? userManager = svcProvider.GetRequiredService<UserManager<AppUser>>();
+            IConfiguration config = svcProvider.GetRequiredService<IConfiguration>();
+
             // Make sure the user doesn't exist already
             if (await userManager.FindByEmailAsync("demouser1@contactpro.com") == null)
             {
