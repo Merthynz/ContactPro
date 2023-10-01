@@ -35,6 +35,9 @@ var scope = app.Services.CreateScope();
 // Get the database update with the latest migrations
 await DataHelper.ManageDataAsync(scope.ServiceProvider);
 
+// Set Demo User
+await DataHelper.SeedDemoUserAsync(scope.ServiceProvider);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
