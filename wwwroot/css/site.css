@@ -208,3 +208,10 @@ main {
         font-size: 3.5rem;
     }
 }
+
+@media (max-width: 991.98px)
+{
+    .registerbutton {
+        margin-bottom: 5px;
+    }
+}
