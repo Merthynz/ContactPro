@@ -24,13 +24,13 @@ namespace ContactPro.Helpers
             IConfiguration config = svcProvider.GetRequiredService<IConfiguration>();
 
             // Make sure the user doesn't exist already
-            if (await userManager.FindByEmailAsync("demouser1@contactpro.com") == null)
+            if (await userManager.FindByEmailAsync("demouser2@contactpro.com") == null)
             {
                 // Create the user
                 AppUser demoUser = new()
                 {
-                    Email = "demouser1@contactpro.com",
-                    UserName = "demouser1@contactpro.com",
+                    Email = "demouser2@contactpro.com",
+                    UserName = "demouser2@contactpro.com",
                     FirstName = "Demo",
                     LastName = "User",
                     EmailConfirmed = true
