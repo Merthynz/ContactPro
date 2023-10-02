@@ -25,13 +25,11 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAddressBookService, AddressBookService>();
 builder.Services.AddScoped<IEmailSender, EmailService>();
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-builder.Services.Configure<DemoSettings>(builder.Configuration.GetSection("DemoSettings"));
 
 
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
-
 // Get the database update with the latest migrations
 await DataHelper.ManageDataAsync(scope.ServiceProvider);
 
