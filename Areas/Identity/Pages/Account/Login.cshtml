@@ -10,7 +10,9 @@
         <section>
             <form id="account" method="post" class="mb-5">
                 <h2>Use Demo:</h2>
-                <button id="login-submit" type="submit" class="btn btn-lg btn-primary" value="demoLogin" name="demoLogin" onclick="this.form.submit()">Try Me!</button>
+                <input hidden asp-for="Input.Email" value="demouser@contactpro.com" />
+                <input hidden asp-for="Input.Password" value="Abc&123!" />
+                <button id="login-submit" type="submit" class="btn btn-primary btn-lg btnlinks me-2">Try me!</button>
             </form>
 
             <form id="account" method="post">

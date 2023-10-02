@@ -21,26 +21,34 @@ namespace ContactPro.Helpers
         {
             // Get our dependencies from the service provider
             UserManager<AppUser>? userManager = svcProvider.GetRequiredService<UserManager<AppUser>>();
-            IConfiguration config = svcProvider.GetRequiredService<IConfiguration>();
 
-            // Make sure the user doesn't exist already
-            if (await userManager.FindByEmailAsync("demouser4@contactpro.com") == null)
+            // Create the Demo User
+            AppUser demoUser = new()
             {
-                // Create the user
-                AppUser demoUser = new()
+                Email = "demouser@contactpro.com",
+                UserName = "demouser@contactpro.com",
+                FirstName = "Demo",
+                LastName = "User",
+                EmailConfirmed = true
+            };
+
+            // Make sure that the email doesn't exist in the database
+            try
+            {
+                var user = await userManager.FindByEmailAsync(demoUser.Email);
+                if (user == null)
                 {
-                    Email = "demouser4@contactpro.com",
-                    UserName = "demouser4@contactpro.com",
-                    FirstName = "Demo",
-                    LastName = "User",
-                    EmailConfirmed = true
-                };
-
-                // Get the password from secrets.json or env variable
-                await userManager.CreateAsync(demoUser, config.GetSection("DemoSettings")["DemoPassword"] ?? Environment.GetEnvironmentVariable("DemoPassword"));
+                    await userManager.CreateAsync(demoUser, "Abc&123!");
+                }
             }
-
-            
+            catch (Exception ex)
+            {
+                Console.WriteLine("*********  ERROR  **********");
+                Console.WriteLine("Error Seeding Demo User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("*****************************");
+                throw;
+            }
         }
     }
 }
