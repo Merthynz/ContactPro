@@ -24,20 +24,20 @@ namespace ContactPro.Helpers
             IConfiguration config = svcProvider.GetRequiredService<IConfiguration>();
 
             // Make sure the user doesn't exist already
-            if (await userManager.FindByEmailAsync("demouser2@contactpro.com") == null)
+            if (await userManager.FindByEmailAsync("demouser4@contactpro.com") == null)
             {
                 // Create the user
                 AppUser demoUser = new()
                 {
-                    Email = "demouser2@contactpro.com",
-                    UserName = "demouser2@contactpro.com",
+                    Email = "demouser4@contactpro.com",
+                    UserName = "demouser4@contactpro.com",
                     FirstName = "Demo",
                     LastName = "User",
                     EmailConfirmed = true
                 };
 
                 // Get the password from secrets.json or env variable
-                await userManager.CreateAsync(demoUser, config.GetSection("DemoSettings")["DemoData"] ?? Environment.GetEnvironmentVariable("DemoPassword"));
+                await userManager.CreateAsync(demoUser, config.GetSection("DemoSettings")["DemoPassword"] ?? Environment.GetEnvironmentVariable("DemoPassword"));
             }
 
             

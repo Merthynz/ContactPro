@@ -106,8 +106,8 @@ namespace ContactPro.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string demoLogin, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            var pass = _configuration.GetRequiredSection("DemoSettings")["DemoData"] ?? Environment.GetEnvironmentVariable("DemoPassword");
-            var demo = await _signInManager.PasswordSignInAsync("demouser2@contactpro.com", pass, false, lockoutOnFailure: false);
+            var pass = _configuration.GetRequiredSection("DemoSettings")["DemoPassword"] ?? Environment.GetEnvironmentVariable("DemoPassword");
+            var demo = await _signInManager.PasswordSignInAsync("demouser4@contactpro.com", pass, false, lockoutOnFailure: false);
             if (demo.Succeeded && !string.IsNullOrEmpty(demoLogin))
             {
                 _logger.LogInformation("User is logged in");
